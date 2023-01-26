@@ -3,6 +3,8 @@ from aiogram.dispatcher.filters import Text
 from import_of_message.message_answer import *
 from keyboards import *
 from config import TOKEN
+from information_about_video.video_array import *
+import random
 
 # Объект бота
 bot = Bot(TOKEN)  # экземпляр бота , connection API
@@ -66,13 +68,7 @@ async def location_organization(message: types.Message):
     await message.delete()
 
 
-@dp.message_handler(commands=['back_to_start_menu'])
-async def back_to_start_menu_bot(message: types.Message):
-    await message.answer(text='Вы вернулись в стартовое меню', reply_markup=key_board)
-    await message.delete()
-
-
-@dp.message_handler(commands=['back'])
+@dp.message_handler(Text(equals='🚂Назад🚂'))
 async def back_to_menu(message: types.Message):
     await message.answer(text='Вы вернулись на раздел назад',
                          reply_markup=key_board_of_menu_support)
@@ -86,10 +82,21 @@ async def menu_of_support(message: types.Message):
     await message.delete()
 
 
-@dp.message_handler(Text(equals='🚂Полезные статьи для технической поддержки🚂'))  # дописать кнопку со статьями
+@dp.message_handler(
+    Text(equals='🚂Полезные видео для специалистов технической поддержки🚂'))  # дописать кнопку со статьями
 async def article_support(message: types.Message):
-    await message.answer(text='Вы перешли в этот раздел для просмотра статей')
+    await message.answer(text='Вы перешли в этот раздел для просмотра статей',
+                         reply_markup=key_board_articles_support)
     await message.delete()
+
+
+@dp.message_handler(Text(equals='🚂Вывести случайное видео🚂'))
+async def send_random_article(message: types.Message):
+    random_video = random.choice(list(dict_videos_description.keys()))
+    await bot.send_message(chat_id=message.chat.id,
+                           text=random_video,
+
+                           )
 
 
 @dp.message_handler(Text(equals='🚂Местоположение организации🚂'))
@@ -106,10 +113,16 @@ async def recieve_contact_info_organization(message: types.Message):
     await message.delete()
 
 
-@dp.message_handler(Text(equals='Вспомогательная информации по использованию бота'))
+@dp.message_handler(Text(equals='🚂Вспомогательная информации по использованию бота🚂'))
 async def help_information_bot(message: types.Message):
     await message.answer(text='Вы перешли в раздел вспомогательной информации по боту @RZD_TECHNICAL_BOT',
                          reply_markup=key_board_help)
+
+
+@dp.message_handler(Text(equals='🚂Вернуться в Стартовое меню🚂'))
+async def help_information_bot(message: types.Message):
+    await message.answer(text='Вы перешли в раздел вспомогательной информации по боту @RZD_TECHNICAL_BOT',
+                         reply_markup=key_board)
 
 
 if __name__ == "__main__":
