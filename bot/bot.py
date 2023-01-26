@@ -92,11 +92,10 @@ async def article_support(message: types.Message):
 
 @dp.message_handler(Text(equals='🚂Вывести случайное видео🚂'))
 async def send_random_article(message: types.Message):
-    random_video = random.choice(list(dict_videos_description.keys()))
+    random_video = random.choice(video)
     await bot.send_message(chat_id=message.chat.id,
                            text=random_video,
-
-                           )
+                            )
 
 
 @dp.message_handler(Text(equals='🚂Местоположение организации🚂'))
