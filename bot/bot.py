@@ -14,6 +14,12 @@ dp = Dispatcher(bot)
 async def start_up_bot(_):
     print('Бот начал свою работу и готов к использованию')
 
+async def random_video(message:types.Message):
+    random_video = random.choice(video)
+    await bot.send_message(chat_id=message.chat.id,
+                           text=random_video,
+                           reply_markup=ikb
+                           )
 
 @dp.message_handler(commands=['start'])
 async def bot_launch(message: types.Message):
@@ -92,11 +98,7 @@ async def article_support(message: types.Message):
 
 @dp.message_handler(Text(equals='🚂Вывести случайное видео🚂'))
 async def send_random_article(message: types.Message):
-    random_video = random.choice(video)
-    await bot.send_message(chat_id=message.chat.id,
-                           text=random_video,
-                            )
-
+    await random_video(message)
 
 @dp.message_handler(Text(equals='🚂Местоположение организации🚂'))
 async def recieve_location_organization(message: types.Message):
@@ -123,6 +125,16 @@ async def help_information_bot(message: types.Message):
     await message.answer(text='Вы перешли в раздел вспомогательной информации по боту @RZD_TECHNICAL_BOT',
                          reply_markup=key_board)
 
+
+@dp.callback_query_handler()
+async def callback_video_random(callback: types.CallbackQuery):
+    if callback.data == 'like':
+        await callback.answer('Спасибо, мы рады ,что вам понравился наш материал!')
+    elif callback.data == 'dislike':
+        await callback.answer('Спасибо, за честный ответ,будем работать над этим!')
+    else:
+        await random_video(message=callback.message)
+        await callback.message()
 
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True, on_startup=start_up_bot)

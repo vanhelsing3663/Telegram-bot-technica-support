@@ -1,4 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 
 key_board = ReplyKeyboardMarkup(resize_keyboard=True)  # Меню при старте бота которое будет видеть пользователь
 button1 = KeyboardButton(text='🚂Главное меню для сотрудников🚂')
@@ -39,3 +39,11 @@ key_board_articles_support = ReplyKeyboardMarkup(resize_keyboard=True)
 bb3 = KeyboardButton(text='🚂Вывести случайное видео🚂')
 bb4 = KeyboardButton(text='🚂Назад🚂')
 key_board_articles_support.add(bb3).add(bb4)
+
+ikb = InlineKeyboardMarkup(row_width=2)
+ib1 = InlineKeyboardButton(text='🤍❤️ ', callback_data='like')
+ib2 = InlineKeyboardButton(text='💔  ', callback_data='dislike')
+ib3 = InlineKeyboardButton(text='Следующее видео', callback_data='next')
+
+ikb.add(ib1, ib2).add(ib3)
+
