@@ -125,13 +125,23 @@ async def help_information_bot(message: types.Message):
     await message.answer(text='Вы перешли в раздел вспомогательной информации по боту @RZD_TECHNICAL_BOT',
                          reply_markup=key_board)
 
-
+flag = False
 @dp.callback_query_handler()
 async def callback_video_random(callback: types.CallbackQuery):
+    global flag
     if callback.data == 'like':
-        await callback.answer('Спасибо, мы рады ,что вам понравился наш материал!')
+        if not flag:
+            await callback.answer('Спасибо, мы рады ,что вам понравился наш материал!')
+            flag = not flag
+        else:
+            await callback.answer('Вы уже лайкнули')
     elif callback.data == 'dislike':
-        await callback.answer('Спасибо, за честный ответ,будем работать над этим!')
+        if not flag:
+            await callback.answer('Спасибо, за честный ответ,будем работать над этим!')
+            flag = not flag
+        else:
+            await callback.answer('Мы вас уже услышали,спасибо)')
+
     else:
         await random_video(message=callback.message)
         await callback.message()
