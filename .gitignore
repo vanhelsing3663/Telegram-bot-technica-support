@@ -1,4 +1,4 @@
 .idea/
 /bot/config.py
-/__pycache__
-/venv
+import_of_message/__pycache__
+/ven
