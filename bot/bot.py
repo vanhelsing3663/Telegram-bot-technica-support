@@ -12,7 +12,7 @@ dp = Dispatcher(bot)
 
 
 async def start_up_bot(_):
-    print('Бот начал свою работу и готов к использованию')
+    print('Бот начал свою работу и готов к использованию ')
 
 async def random_video(message:types.Message):
     random_video = random.choice(video)
