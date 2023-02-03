@@ -12,14 +12,16 @@ dp = Dispatcher(bot)
 
 
 async def start_up_bot(_):
-    print('Бот начал свою работу и готов к использованию ')
+    print('Бот начал свою работу и готов к использованию  ')
 
-async def random_video(message:types.Message):
+
+async def random_video(message: types.Message):
     random_video = random.choice(video)
     await bot.send_message(chat_id=message.chat.id,
                            text=random_video,
                            reply_markup=ikb
                            )
+
 
 @dp.message_handler(commands=['start'])
 async def bot_launch(message: types.Message):
@@ -27,8 +29,7 @@ async def bot_launch(message: types.Message):
        Функции запуска бота в чат с ботом вводиться /start
     после чего бот приветствует пользователя по его id юзера
     message - это сообзение которое будет возвращенно пользователю '''
-    await message.answer(text=
-                         f'{HI} {message.from_user.first_name} {HI2}',
+    await message.answer(text=f'{HI} {message.from_user.first_name} {HI2}',
                          parse_mode='HTML',
                          reply_markup=key_board
                          )  # приветствие пользователя
@@ -100,6 +101,7 @@ async def article_support(message: types.Message):
 async def send_random_article(message: types.Message):
     await random_video(message)
 
+
 @dp.message_handler(Text(equals='🚂Местоположение организации🚂'))
 async def recieve_location_organization(message: types.Message):
     await message.answer(text='Вы перешли в этот раздел для просмотра местоположения организации',
@@ -125,7 +127,10 @@ async def help_information_bot(message: types.Message):
     await message.answer(text='Вы перешли в раздел вспомогательной информации по боту @RZD_TECHNICAL_BOT',
                          reply_markup=key_board)
 
+
 flag = False
+
+
 @dp.callback_query_handler()
 async def callback_video_random(callback: types.CallbackQuery):
     global flag
