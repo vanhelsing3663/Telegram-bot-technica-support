@@ -144,7 +144,7 @@ async def callback_video_random(callback: types.CallbackQuery):
 
     else:
         await random_video(message=callback.message)
-        await callback.message()
+
 
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True, on_startup=start_up_bot)

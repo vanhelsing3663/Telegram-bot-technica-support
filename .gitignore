@@ -1,2 +1,4 @@
 .idea/
 /bot/config.py
+/__pycache__
+/venv
