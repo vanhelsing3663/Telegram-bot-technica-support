@@ -1,6 +1,7 @@
 import sqlite3 as sq
+import re
 
-with sq.connect('RZHD_TG_DB.db') as con:
+with sq.connect('RZHD_BOT.db') as con:
     cur = con.cursor()
     # Создаем таблицу Справки где прописываем такие атрибуты как:
     # первичный ключ с автоинкрементом
@@ -21,24 +22,54 @@ with sq.connect('RZHD_TG_DB.db') as con:
     email TEXT NOT NULL,
     data_passport TEXT NOT NULL,
     job_title TEXT NOT NULL,
-    CONSTRAINT fk_employees,
-    FOREIGN KEY (employee_id)
+    emp_id INTEGER ,
+    CONSTRAINT InformEmployee,
+    FOREIGN KEY (emp_id)
     REFERENCES information (id)
     )''')
-    cur.execute('''
-    INSERT INTO  employees (name, surname, patronymic, email, data_passport,job_title) VALUES
-    ('Кирилл','Коннов','Максимович','konnov360@gmail.com','7815636718','Инженер'),
-    ('Игорь','Рассомахин','Максимович','igor345@gmail.com','7815636718','Старший-Инженер'),
-    ('Андрей','Гуцал','Александрович','andro30@gmail.com','7815636718','Инженер 1 категории'),
-    ('Вячеслав','Дацик','Петрович','vycheslav1000@gmail.com','7815636718','Инженер 2 категории'),
-    ('Денис','Петров','Иванович','den60@gmail.com','7815636718','Инженер 1 категории'),
-    ('Анатолий','Иванов','Игоревич','tolya360@gmail.com','7815636718','Инженер 2 категории');
-    ''')
-    cur.execute('''
-    INSERT INTO information (id, information_name, receiving_address) VALUES
-    (1,'Справка по месту требования','Город Ярославль Волжская набережная 59'),
-    (2,'Справка о стаже','Город Ярославль Волжская набережная 59'),
-    (3,'Справка за выслугу лет','Город Ярославль Волжская набережная 59'),
-    (4,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59'),
-    (6,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59')
-    ''')
+
+
+    # cur.execute('''
+    # INSERT INTO  employees (name, surname, patronymic, email, data_passport,job_title,emp_id) VALUES
+    # ('Кирилл','Коннов','Максимович','konnov360@gmail.com','7915636718','Инженер',2),
+    # ('Игорь','Рассомахин','Максимович','igor345@gmail.com','7715636718','Старший-Инженер',2),
+    # ('Андрей','Гуцал','Александрович','andro30@gmail.com','7615636718','Инженер 1 категории',3),
+    # ('Вячеслав','Дацик','Петрович','vycheslav1000@gmail.com','7415636718','Инженер 2 категории',4),
+    # ('Денис','Петров','Иванович','den60@gmail.com','7315636718','Инженер 1 категории',5),
+    # ('Анатолий','Иванов','Игоревич','tolya360@gmail.com','7215636718','Инженер 2 категории',6),
+    # ('Павел','Ивлеев','Игоревич','pavel30@gmail.com','7515322718','Инженер 1 категории',6);
+    # ''')
+    # cur.execute('''
+    # INSERT INTO information (id, information_name, receiving_address) VALUES
+    # (1,'Справка по месту требования','Город Ярославль Волжская набережная 59'),
+    # (2,'Справка о стаже','Город Ярославль Волжская набережная 59'),
+    # (3,'Справка за выслугу лет','Город Ярославль Волжская набережная 59'),
+    # (4,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59'),
+    # (6,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59')
+    # ''')
+
+    def convert_to_string_employees(all_employees):
+        braces = r'[\(\)]'
+        all_emp = ', '.join([str(i) for i in all_employees])  # вывод всех сотрудников которые запросили справки
+        all_empl = re.sub(braces, '', all_emp)
+        return all_empl
+
+
+    def convert_to_string_information(all_information):
+        braces = r'[\(\)]'
+        all_inf = ', '.join([str(i) for i in all_information])
+        all_inf = re.sub(braces,'',all_inf)
+        return all_inf
+
+    def convert_to_string_email_name(all_email):
+        all_email = ' '.join(str(i) for i in all_email)
+        return all_email
+    all_employees = cur.execute(
+        'select name,surname, patronymic, email, data_passport,job_title from employees').fetchall()
+    print(convert_to_string_employees(all_employees))
+    all_information = cur.execute('SELECT information_name, receiving_address FROM information')
+    print(convert_to_string_employees(all_information))
+    all_email_name = cur.execute('''SELECT name, surname, email, information_name
+                                    FROM employees 
+                                    JOIN information ON employees.emp_id = information.id''').fetchall()
+    print(convert_to_string_email_name(all_email_name))
