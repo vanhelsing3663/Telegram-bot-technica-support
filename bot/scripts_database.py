@@ -49,6 +49,7 @@ with sq.connect('RZHD_BOT.db') as con:
     # ''')
 
     def convert_to_string_employees(all_employees):
+        '''Вывод всех работников из бд с помощью sql запроса'''
         braces = r'[\(\)]'
         all_emp = ', '.join([str(i) for i in all_employees])  # вывод всех сотрудников которые запросили справки
         all_empl = re.sub(braces, '', all_emp)
@@ -56,14 +57,19 @@ with sq.connect('RZHD_BOT.db') as con:
 
 
     def convert_to_string_information(all_information):
+        '''Вывод всех справок из бд с помощью sql запроса'''
         braces = r'[\(\)]'
         all_inf = ', '.join([str(i) for i in all_information])
-        all_inf = re.sub(braces,'',all_inf)
+        all_inf = re.sub(braces, '', all_inf)
         return all_inf
 
+
     def convert_to_string_email_name(all_email):
+        '''Вывод всех имен,фамилий,емайлов и справок из бд с помощью sql запроса'''
         all_email = ' '.join(str(i) for i in all_email)
         return all_email
+
+
     all_employees = cur.execute(
         'select name,surname, patronymic, email, data_passport,job_title from employees').fetchall()
     print(convert_to_string_employees(all_employees))

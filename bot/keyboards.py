@@ -47,3 +47,16 @@ ib3 = InlineKeyboardButton(text='Следующее видео', callback_data='
 
 ikb.add(ib1, ib2).add(ib3)
 
+key_board_bd = ReplyKeyboardMarkup(resize_keyboard=True)
+b_b = KeyboardButton(text='🚂Запросы на вывод🚂')
+b_b2 = KeyboardButton(text='🚂Сформировать запрос🚂')
+b_b3 = KeyboardButton(text='🚂Вернуться в Стартовое меню🚂')
+key_board_bd.add(b_b).add(b_b2).add(b_b3)
+
+key_board_menu_support = ReplyKeyboardMarkup(resize_keyboard=True)
+bbb1 = KeyboardButton(text='🚂Вывести всех сотрудников с их личной информацией🚂')
+bbb2 = KeyboardButton(text='🚂Вывести все виды справок🚂')
+bbb3 = KeyboardButton(text='🚂Вывести имя, фамилию и справку которую заказал сотрудник🚂')
+bbb4 = KeyboardButton(text='🚂Вернуться назад🚂')
+key_board_menu_support.add(bbb1, bbb2).add(bbb3).add(bbb4)
+

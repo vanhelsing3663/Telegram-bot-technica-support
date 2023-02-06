@@ -128,9 +128,31 @@ async def help_information_bot(message: types.Message):
                          reply_markup=key_board)
 
 
+@dp.message_handler(Text(equals='🚂Вспомогательная информации по использованию бота🚂'))
+async def help_info_of_support(message: types.Message):
+    await message.answer(text='Вы перешли в раздел вспомогательной ифнормации',
+                         reply_markup=key_board_help)
+
+
+@dp.message_handler(Text(equals='🚂Для сотрудников технической поддержки🚂'))
+async def request_bd(message: types.Message):
+    await message.answer(text='Вы перешли в раздел для специалистов тех поддержки',
+                         reply_markup=key_board_bd)
+
+
+@dp.message_handler(Text(equals='🚂Запросы на вывод🚂'))
+async def request_bd(message: types.Message):
+    await message.answer(text='Вы перешли в раздел сформированных запросов БД',
+                         reply_markup=key_board_menu_support)
+
+
+@dp.message_handler(Text(equals='🚂Вернуться назад🚂'))
+async def back_menu(message:types.Message):
+    await message.answer(text='Вы вернулись назад',
+                         reply_markup=key_board_bd)
+
+
 flag = False
-
-
 @dp.callback_query_handler()
 async def callback_video_random(callback: types.CallbackQuery):
     global flag
