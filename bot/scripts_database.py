@@ -47,7 +47,9 @@ with sq.connect('RZHD_BOT.db') as con:
     # (4,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59'),
     # (6,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59')
     # ''')
-
+    with open('sql_damp.sql','w') as f:
+        for sql in con.iterdump():
+            f.write(sql)
     def convert_to_string_employees(all_employees):
         '''Вывод всех работников из бд с помощью sql запроса'''
         braces = r'[\(\)]'
