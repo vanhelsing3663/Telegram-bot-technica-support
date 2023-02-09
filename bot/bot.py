@@ -5,6 +5,7 @@ from keyboards import *
 from config import TOKEN
 from information_about_video.video_array import *
 import random
+from scripts_database import *
 
 # Объект бота
 bot = Bot(TOKEN)  # экземпляр бота , connection API
@@ -120,37 +121,62 @@ async def recieve_contact_info_organization(message: types.Message):
 async def help_information_bot(message: types.Message):
     await message.answer(text='Вы перешли в раздел вспомогательной информации по боту @RZD_TECHNICAL_BOT',
                          reply_markup=key_board_help)
+    await message.delete()
 
 
 @dp.message_handler(Text(equals='🚂Вернуться в Стартовое меню🚂'))
 async def help_information_bot(message: types.Message):
     await message.answer(text='Вы перешли в раздел вспомогательной информации по боту @RZD_TECHNICAL_BOT',
                          reply_markup=key_board)
+    await message.delete()
 
 
 @dp.message_handler(Text(equals='🚂Вспомогательная информации по использованию бота🚂'))
 async def help_info_of_support(message: types.Message):
     await message.answer(text='Вы перешли в раздел вспомогательной ифнормации',
                          reply_markup=key_board_help)
+    await message.delete()
 
 
 @dp.message_handler(Text(equals='🚂Для сотрудников технической поддержки🚂'))
 async def request_bd(message: types.Message):
     await message.answer(text='Вы перешли в раздел для специалистов тех поддержки',
                          reply_markup=key_board_bd)
+    await message.delete()
 
 
 @dp.message_handler(Text(equals='🚂Запросы на вывод🚂'))
 async def request_bd(message: types.Message):
     await message.answer(text='Вы перешли в раздел сформированных запросов БД',
                          reply_markup=key_board_menu_support)
+    await message.delete()
 
 
 @dp.message_handler(Text(equals='🚂Вернуться назад🚂'))
-async def back_menu(message:types.Message):
+async def back_menu(message: types.Message):
     await message.answer(text='Вы вернулись назад',
                          reply_markup=key_board_bd)
+    await message.delete()
 
+
+@dp.message_handler(Text(equals='🚂Вывести всех сотрудников с их личной информацией🚂'))
+async def conclusion_employees(message: types.Message):
+    await message.answer(text=convert_to_string_employees(all_employees))
+    await message.delete()
+
+@dp.message_handler(Text(equals='🚂Вывести имя, фамилию и справку которую заказал сотрудник🚂'))
+async def consolution_email_name(message:types.Message):
+    await message.answer(text=convert_inf_employees(all_email_name))
+    await message.delete()
+
+@dp.message_handler(Text(equals='🚂Вывести все виды справок🚂'))
+async def consolution_information(message:types.Message):
+    await message.answer(text=convert_information(all_information))
+    await message.delete()
+
+@dp.message_handler(Text(equals='🚂Вывести все почты сотрудников🚂'))
+async def consolution_email(message:types.Message):
+    await message.answer(text=convert_email(all_email))
 
 flag = False
 @dp.callback_query_handler()

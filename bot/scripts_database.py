@@ -28,7 +28,6 @@ with sq.connect('RZHD_BOT.db') as con:
     REFERENCES information (id)
     )''')
 
-
     # cur.execute('''
     # INSERT INTO  employees (name, surname, patronymic, email, data_passport,job_title,emp_id) VALUES
     # ('Кирилл','Коннов','Максимович','konnov360@gmail.com','7915636718','Инженер',2),
@@ -47,35 +46,48 @@ with sq.connect('RZHD_BOT.db') as con:
     # (4,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59'),
     # (6,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59')
     # ''')
+    with open('sql_damp.sql', 'w') as f:
+        for sql in con.iterdump():
+            f.write(sql)
 
+
+    # расскоментировать, если бд по каким то причинам удалилась или была утеряна
+    # with open('sql_damp.sql','r') as f:
+    #     sql = f.read()
+    #     cur.executescript(sql)
     def convert_to_string_employees(all_employees):
         '''Вывод всех работников из бд с помощью sql запроса'''
-        braces = r'[\(\)]'
-        all_emp = ', '.join([str(i) for i in all_employees])  # вывод всех сотрудников которые запросили справки
-        all_empl = re.sub(braces, '', all_emp)
-        return all_empl
+
+        # вывод всех сотрудников которые запросили справки
+        s = '\n'.join(
+            i[0] + ' - ' + i[1] + ' - ' + i[2] + ' - ' + i[3] + ' -паспортные данные- ' + i[4] + ' -квалификация- ' + i[
+                5] for i in all_employees)
+        return s
 
 
-    def convert_to_string_information(all_information):
-        '''Вывод всех справок из бд с помощью sql запроса'''
-        braces = r'[\(\)]'
-        all_inf = ', '.join([str(i) for i in all_information])
-        all_inf = re.sub(braces, '', all_inf)
-        return all_inf
+    def convert_email(all):
+        '''Вывод всех имен, фамилий,емайлов и справок из бд с помощью sql запроса'''
+        return f' \n'.join(i[0] for i in all)
+        return all
 
 
-    def convert_to_string_email_name(all_email):
-        '''Вывод всех имен,фамилий,емайлов и справок из бд с помощью sql запроса'''
-        all_email = ' '.join(str(i) for i in all_email)
-        return all_email
+    def convert_information(inf):
+        inf = '\n'.join('Наименование справки - ' + i[0] + ' Адрес получения - ' + i[1] for i in inf)
+        return inf
+
+
+    def convert_inf_employees(emp):
+        emp = '\n'.join(i[0] + ' ' + i[1] + ' ' + i[2] + ' Заказанная справка - ' + i[3] for i in emp)
+        return emp
 
 
     all_employees = cur.execute(
         'select name,surname, patronymic, email, data_passport,job_title from employees').fetchall()
-    print(convert_to_string_employees(all_employees))
-    all_information = cur.execute('SELECT information_name, receiving_address FROM information')
-    print(convert_to_string_employees(all_information))
+
+    all_information = cur.execute('SELECT information_name, receiving_address FROM information').fetchall()
+
     all_email_name = cur.execute('''SELECT name, surname, email, information_name
                                     FROM employees 
                                     JOIN information ON employees.emp_id = information.id''').fetchall()
-    print(convert_to_string_email_name(all_email_name))
+
+    all_email = cur.execute('''SELECT email FROM employees''').fetchall()
