@@ -1,4 +1,4 @@
-BEGIN TRANSACTION;CREATE TABLE employees( 
+BEGIN TRANSACTION;CREATE TABLE employees(
     employee_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     surname TEXT NOT NULL,
@@ -14,4 +14,4 @@ BEGIN TRANSACTION;CREATE TABLE employees(
         id INTEGER PRIMARY KEY ,
         information_name TEXT NOT NULL,
         receiving_address TEXT NOT NULL
-        );INSERT INTO "information" VALUES(1,'Справка по месту требования','Город Ярославль Волжская набережная 59');INSERT INTO "information" VALUES(2,'Справка о стаже','Город Ярославль Волжская набережная 59');INSERT INTO "information" VALUES(3,'Справка за выслугу лет','Город Ярославль Волжская набережная 59');INSERT INTO "information" VALUES(4,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59');INSERT INTO "information" VALUES(6,'Копия приказа о приеме на работу','Город Ярославль Волжская набережная 59');DELETE FROM "sqlite_sequence";INSERT INTO "sqlite_sequence" VALUES('employees',7);COMMIT;
+        );INSERT INTO "information" VALUES(1,'Справка по м
