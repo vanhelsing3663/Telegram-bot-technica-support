@@ -1,9 +1,15 @@
 .idea/
 /bot/config.py
+
+import_of_message/__pycache__
+/ven
+
 /__pycache__
 /venv
 /bot/RZHD_BOT.db
+
 bot/__pycache__/config.cpython-310.pyc
 bot/__pycache__/keyboards.cpython-310.pyc
 bot/__pycache__/scripts_database.cpython-310.pyc
 import_of_message/__pycache__/message_answer.cpython-310.pyc
+
