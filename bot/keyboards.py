@@ -9,7 +9,8 @@ class Keyboard:
         button1 = KeyboardButton(text='🚂Главное меню для сотрудников🚂')
         button2 = KeyboardButton(text='🚂Для сотрудников технической поддержки🚂')
         button3 = KeyboardButton(text='🚂Вспомогательная информации по использованию бота🚂')
-        key_board.add(button1, button2).add(button3)
+        button4 = KeyboardButton(text='🚂Написать администратору🚂')
+        key_board.add(button1, button2).add(button3).add(button4)
         return key_board
 
     def menu_support(self):
@@ -68,9 +69,8 @@ class Keyboard:
     def key_board_bd(self):
         key_board_bd = ReplyKeyboardMarkup(resize_keyboard=True)
         b_b = KeyboardButton(text='🚂Запросы на вывод🚂')
-        b_b2 = KeyboardButton(text='🚂Сформировать запрос🚂')
         b_b3 = KeyboardButton(text='🚂Вернуться в Стартовое меню🚂')
-        key_board_bd.add(b_b).add(b_b2).add(b_b3)
+        key_board_bd.add(b_b).add(b_b3)
         return key_board_bd
 
     def button_select_info(self):
