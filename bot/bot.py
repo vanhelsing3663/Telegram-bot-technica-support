@@ -181,6 +181,10 @@ async def consolution_information(message:types.Message):
 async def consolution_email(message:types.Message):
     await message.answer(text=db.convert_email())
 
+@dp.message_handler(Text(equals='🚂Написать администратору🚂'))
+async def administrator_contact(message:types.Message):
+    await message.answer('По всем интересующим вопросам обращаться по ссылке @krkptvk')
+
 flag = False
 @dp.callback_query_handler()
 async def callback_video_random(callback: types.CallbackQuery):
