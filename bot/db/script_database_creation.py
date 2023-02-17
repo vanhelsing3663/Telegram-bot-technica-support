@@ -11,7 +11,7 @@ import sqlite3 as sq
 #         Создаем таблицу Сотрудники где прописываем такие атрибуты как:
 #         первичный ключ с автоинкрементом
 #         имя,фамилия,отчество,email,паспортные данные,должность сотрудника
-with sq.connect('RZHD_BOT.db') as con:
+with sq.connect('../RZHD_BOT.db') as con:
     cur = con.cursor()
     cur.execute('''CREATE TABLE IF NOT EXISTS employees(
     employee_id INTEGER PRIMARY KEY AUTOINCREMENT,
