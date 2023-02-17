@@ -3,7 +3,7 @@ import sqlite3 as sq
 
 class Database:
     def __init__(self):
-        with sq.connect('RZHD_BOT.db') as con:
+        with sq.connect('../RZHD_BOT.db') as con:
             self.cur = con.cursor()
 
     def convert_to_string_employees(self):
